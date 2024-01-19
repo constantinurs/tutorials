@@ -9,7 +9,9 @@ import java.util.Currency;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +22,8 @@ import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 
-@SpringBootTest(classes = KafkaMultipleTopicsApplication.class)
+@SpringBootTest(classes = KafkaMultipleTopicsApplication.class,
+    properties = "spring.kafka.bootstrap-servers=localhost:9099")
 @EmbeddedKafka(partitions = 1, brokerProperties = { "listeners=PLAINTEXT://localhost:9099", "port=9099" })
 public class KafkaMultipleTopicsIntegrationTest {
     private static final String CARD_PAYMENTS_TOPIC = "card-payments";

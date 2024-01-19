@@ -25,11 +25,13 @@ import com.baeldung.spring.kafka.dlt.listener.PaymentListenerDltFailOnError;
 import com.baeldung.spring.kafka.dlt.listener.PaymentListenerDltRetryOnError;
 import com.baeldung.spring.kafka.dlt.listener.PaymentListenerNoDlt;
 
-@SpringBootTest(classes = KafkaDltApplication.class)
+@SpringBootTest(classes = KafkaDltApplication.class,
+    properties = "spring.kafka.bootstrap-servers=localhost:9095")
 @EmbeddedKafka(
     partitions = 1,
     brokerProperties = { "listeners=PLAINTEXT://localhost:9095", "port=9095" },
-    topics = {"payments-fail-on-error-dlt", "payments-retry-on-error-dlt", "payments-no-dlt"}
+    topics = {"payments-fail-on-error-dlt", "payments-retry-on-error-dlt", "payments-no-dlt"},
+    controlledShutdown = true
 )
 public class KafkaDltIntegrationTest {
     private static final String FAIL_ON_ERROR_TOPIC = "payments-fail-on-error-dlt";
